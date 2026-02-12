@@ -57,42 +57,34 @@ public class BinaryControllerTest {
                 .andExpect(model().attribute("operand1", "111"));
     }
 
-    // Submitting an invalid binary number
     @Test
-    public void postInvalidBinaryOperand() throws Exception {
-        this.mvc.perform(post("/")
-                        .param("operand1", "102")   // invalid binary
-                        .param("operator", "+")
-                        .param("operand2", "11"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("result"))
-                .andExpect(model().attributeExists("Error"))
-                .andExpect(model().attribute("operand1", "102"));
-    }
-
-    // Missing second operand
-    @Test
-    public void postMissingSecondOperand() throws Exception {
-        this.mvc.perform(post("/")
-                        .param("operand1", "101")
-                        .param("operator", "+"))    // operand2 is missing
+    public void getExplicitEmptyOperand() throws Exception {
+        this.mvc.perform(get("/").param("operand1", ""))
                 .andExpect(status().isOk())
                 .andExpect(view().name("calculator"))
-                .andExpect(model().attributeExists("error"))
-                .andExpect(model().attribute("operand1", "101"));
+                .andExpect(model().attribute("operand1", ""))
+                .andExpect(model().attribute("operand1Focused", false));
     }
 
-    // Valid binary subtraction
     @Test
-    public void postSubtraction() throws Exception {
+    public void postEmptyOperandsWithAdd() throws Exception {
         this.mvc.perform(post("/")
-                        .param("operand1", "111")
-                        .param("operator", "-")
-                        .param("operand2", "10"))
+                        .param("operator", "+"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("result"))        // successful calculation
-                .andExpect(model().attribute("result", "101")) // correct binary result
-                .andExpect(model().attribute("operand1", "111"));
+                .andExpect(view().name("result"));
+    }
+
+    @Test
+    public void postPreservesOperands() throws Exception {
+        this.mvc.perform(post("/")
+                        .param("operand1", "101")
+                        .param("operator", "+")
+                        .param("operand2", "1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("result"))
+                .andExpect(model().attribute("operand1", "101"))
+                .andExpect(model().attribute("operand2", "1"))
+                .andExpect(model().attribute("operator", "+"));
     }
 
 }

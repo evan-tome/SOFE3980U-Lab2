@@ -38,8 +38,8 @@ public class Binary
         // If all digits are '0', ensure number is "0"
         this.number = (beg == number.length()) ? "0" : number.substring(beg);
 
-        // Ensure empty strings are replaced with "0"
-        if (this.number.isEmpty()) {
+        // uncomment the following code
+        if (this.number.isEmpty()) { // replace empty strings with a single zero
             this.number = "0";
         }
     }
@@ -85,5 +85,118 @@ public class Binary
         Binary result=new Binary(num3);  // create a binary object with the calculated value.
         return result;
 
+    }
+
+    /**
+     * Performs a bitwise logical OR operation between two binary variables.
+     *
+     * @param num1 The first binary operand
+     * @param num2 The second binary operand
+     * @return A binary variable whose value is {@code num1 OR num2}
+     */
+    public static Binary or(Binary num1, Binary num2)
+    {
+        // the index of the first digit of each number
+        int ind1 = num1.number.length() - 1;
+        int ind2 = num2.number.length() - 1;
+
+        String result = ""; // stores the OR result
+
+        // process bits until both numbers are exhausted
+        while (ind1 >= 0 || ind2 >= 0)
+        {
+            // get current bits (use 0 if index is out of range)
+            char b1 = (ind1 >= 0) ? num1.number.charAt(ind1) : '0';
+            char b2 = (ind2 >= 0) ? num2.number.charAt(ind2) : '0';
+
+            char resultBit;
+
+            // Compute the OR result for the current bits and add it to the result
+            if (b1 == '1' || b2 == '1') {
+                resultBit = '1';
+            } else {
+                resultBit = '0';
+            }
+
+            result = resultBit + result;
+
+            ind1--;
+            ind2--;
+        }
+
+        return new Binary(result);
+    }
+
+    /**
+     * Performs a bitwise logical AND operation between two binary variables.
+     *
+     * @param num1 The first binary operand
+     * @param num2 The second binary operand
+     * @return A binary variable whose value is {@code num1 AND num2}
+     */
+    public static Binary and(Binary num1, Binary num2)
+    {
+        // index of the least significant bit of each number
+        int ind1 = num1.number.length() - 1;
+        int ind2 = num2.number.length() - 1;
+
+        String result = ""; // stores the AND result
+
+        // process bits until all digits of both numbers have been processed
+        while (ind1 >= 0 || ind2 >= 0)
+        {
+            // get current bits (use '0' if index is out of range)
+            char b1 = (ind1 >= 0) ? num1.number.charAt(ind1) : '0';
+            char b2 = (ind2 >= 0) ? num2.number.charAt(ind2) : '0';
+
+            char resultBit;
+
+            // Compute the AND result for the current bits and add it to the result
+            if (b1 == '1' && b2 == '1') {
+                resultBit = '1';
+            } else {
+                resultBit = '0';
+            }
+
+            result = resultBit + result;
+
+            ind1--;
+            ind2--;
+        }
+
+        return new Binary(result);
+    }
+
+    /**
+     * Multiplies two binary variables using binary multiplication.
+     *
+     * @param num1 The multiplicand
+     * @param num2 The multiplier
+     * @return A binary variable whose value is {@code num1 * num2}
+     */
+    public static Binary multiply(Binary num1, Binary num2)
+    {
+        Binary result = new Binary("0"); // stores the multiplication result
+        int shift = 0; // number of left shifts applied to num1
+
+        // iterate through each bit of num2 from least significant to most
+        for (int i = num2.number.length() - 1; i >= 0; i--)
+        {
+            // if the current bit in num2 is 1, add a shifted version of num1 to the result
+            if (num2.number.charAt(i) == '1')
+            {
+                String shifted = num1.number;
+                // shift left by appending zeros
+                for (int s = 0; s < shift; s++)
+                {
+                    shifted += "0";
+                }
+                result = Binary.add(result, new Binary(shifted));
+            }
+            // increase shift for the next bit
+            shift++;
+        }
+
+        return result;
     }
 }

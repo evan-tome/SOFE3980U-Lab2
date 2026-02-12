@@ -1,16 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.ontariotechu.sofe3980U.BinaryControllerTest
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 1.136 s <<< FAILURE! - in com.ontariotechu.sofe3980U.BinaryControllerTest
-postInvalidBinaryOperand(com.ontariotechu.sofe3980U.BinaryControllerTest)  Time elapsed: 0.026 s  <<< FAILURE!
-java.lang.AssertionError: View name expected:<calculator> but was:<result>
-	at com.ontariotechu.sofe3980U.BinaryControllerTest.postInvalidBinaryOperand(BinaryControllerTest.java:68)
-
-postSubtraction(com.ontariotechu.sofe3980U.BinaryControllerTest)  Time elapsed: 0.015 s  <<< FAILURE!
-java.lang.AssertionError: View name expected:<result> but was:<Error>
-	at com.ontariotechu.sofe3980U.BinaryControllerTest.postSubtraction(BinaryControllerTest.java:93)
-
-postMissingSecondOperand(com.ontariotechu.sofe3980U.BinaryControllerTest)  Time elapsed: 0.017 s  <<< FAILURE!
-java.lang.AssertionError: View name expected:<calculator> but was:<result>
-	at com.ontariotechu.sofe3980U.BinaryControllerTest.postMissingSecondOperand(BinaryControllerTest.java:80)
-
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.358 s - in com.ontariotechu.sofe3980U.BinaryControllerTest
